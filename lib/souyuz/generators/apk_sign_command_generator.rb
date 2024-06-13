@@ -9,7 +9,7 @@ module Souyuz
         Souyuz.cache[:signed_android_package_path] = "#{File.join("#{android_package_dir}", "#{android_package_filename_with_extension}")}"
 
         parts = prefix
-        parts << detect_java_executable
+        #parts << detect_java_executable
         parts << detect_apksigner_executable
         parts += options
         parts << Souyuz.cache[:aligned_apk_path]
@@ -23,16 +23,18 @@ module Souyuz
       end
 
       def detect_java_executable
-        java = "/Library/Java/JavaVirtualMachines/microsoft-11.jdk/Contents/Home/bin/java -jar"
-        
+        java_parent_folder = "/Library/Java/JavaVirtualMachines"
+        version = Dir.entries(java_parent_folder).sort.last
+        java = "#{File.join(java_parent_folder, version, 'Contents/Home/bin/java')} -jar"
+
         java
       end
 
       def detect_apksigner_executable
-        microsoft_buildtools = "/usr/local/share/dotnet/packs/Microsoft.Android.Sdk.Darwin"
+        microsoft_buildtools = "/Users/#{ENV['USER']}/Library/Developer/Xamarin/android-sdk-macosx/build-tools"
         version = Dir.entries(microsoft_buildtools).sort.last
         
-        apksigner = "#{File.join(microsoft_buildtools, version, 'tools', 'apksigner.jar')}"
+        apksigner = "#{File.join(microsoft_buildtools, version, 'apksigner')}"
 
         apksigner
       end

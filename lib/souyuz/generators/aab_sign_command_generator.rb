@@ -17,8 +17,9 @@ module Souyuz
       end
 
       def detect_jarsigner_executable
-        jarsigner = "/Library/Java/JavaVirtualMachines/microsoft-11.jdk/Contents/Home/bin/jarsigner"
-
+        java_parent_folder = "/Library/Java/JavaVirtualMachines"
+        version = Dir.entries(java_parent_folder).sort.last
+        jarsigner = "#{File.join(java_parent_folder, version, 'Contents/Home/bin/jarsigner')}"
         jarsigner
       end
 
