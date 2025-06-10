@@ -12,7 +12,7 @@ module Souyuz
 
         # Set provisioning profile
         if config[:provision_profile_uuid]
-          provision_profile_default_path = "#{Dir.home}/Library/MobileDevice/Provisioning\ Profiles/".freeze
+          provision_profile_default_path = "#{Dir.home}/Library/Developer/Xcode/UserData/Provisioning\ Profiles/".freeze
           provision_profile_path = File.join provision_profile_default_path, "#{config[:provision_profile_uuid]}.mobileprovision"
           cert = ProvisionUtil::get_cert_from_provision(provision_profile_path)
           subject = Hash[cert.subject.to_a.map {|arr|  [arr[0], arr[1]]}]

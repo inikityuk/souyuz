@@ -3,7 +3,7 @@ require "fastlane"
 module Souyuz
   class Options
 
-    PROVISION_FILES_DEFAULT_LOCATION = "#{Dir.home}/Library/MobileDevice/Provisioning\ Profiles/".freeze
+    PROVISION_FILES_DEFAULT_LOCATION = "#{Dir.home}/Library/Developer/Xcode/UserData/Provisioning\ Profiles/".freeze
     BUILD_PLATFORMS = %w(ios-arm64 iossimulator-x64 AnyCPU).freeze
 
     def self.available_options
