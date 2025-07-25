@@ -113,10 +113,10 @@ module Souyuz
     def apksign_and_zipalign
       UI.success "Start signing APK process..."
 
-      command = ZipalignCommandGenerator.generate
-      FastlaneCore::CommandExecutor.execute(command: command,
-                                            print_all: true,
-                                            print_command: !Souyuz.config[:silent])
+      # command = ZipalignCommandGenerator.generate
+      # FastlaneCore::CommandExecutor.execute(command: command,
+      #                                       print_all: true,
+      #                                       print_command: !Souyuz.config[:silent])
 
       command = ApkSignCommandGenerator.generate
       FastlaneCore::CommandExecutor.execute(command: command,

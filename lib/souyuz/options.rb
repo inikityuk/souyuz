@@ -4,7 +4,7 @@ module Souyuz
   class Options
 
     PROVISION_FILES_DEFAULT_LOCATION = "#{Dir.home}/Library/Developer/Xcode/UserData/Provisioning\ Profiles/".freeze
-    BUILD_PLATFORMS = %w(ios-arm64 iossimulator-x64 AnyCPU).freeze
+    BUILD_PLATFORMS = %w(ios-arm64 iossimulator-x64 android-arm64).freeze
 
     def self.available_options
       [
@@ -16,7 +16,7 @@ module Souyuz
         FastlaneCore::ConfigItem.new(key: :compiler_bin,
                                      env_name: "SOUYUZ_COMPILER_BIN",
                                      description: "Path to the compiler binary",
-                                     default_value: 'dotnet build'),
+                                     default_value: 'dotnet publish'),
         FastlaneCore::ConfigItem.new(key: :build_configuration,
                                      env_name: "SOUYUZ_BUILD_CONFIGURATION",
                                      description: "Build configuration value",
@@ -24,7 +24,7 @@ module Souyuz
         FastlaneCore::ConfigItem.new(key: :build_platform,
                                      env_name: "SOUYUZ_BUILD_PLATFORM",
                                      description: "Build platform value",
-                                     default_value: 'AnyCPU',
+                                     default_value: '',
                                      is_string: true,
                                      verify_block: proc do |value|
                                       UI.user_error!("Unsupported build platform, use one of #{BUILD_PLATFORMS}") unless BUILD_PLATFORMS.include? value

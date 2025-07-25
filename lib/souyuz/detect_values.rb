@@ -10,10 +10,10 @@ module Souyuz
 
       # TODO: detect_platform automatically for :platform config
 
-      # set correct implicit build platform for android
-      if config[:platform] == Platform::ANDROID
-        config[:build_platform] = 'AnyCPU'
-      end
+      # # set correct implicit build platform for android
+      # if config[:platform] == Platform::ANDROID
+      #   config[:build_platform] = 'android-arm64'
+      # end
 
       # Detect the project
       Souyuz.project = Msbuild::Project.new(config)
@@ -29,6 +29,7 @@ module Souyuz
       detect_min_max_sdk doc_csproj # we can only do that for android *after* we detected the android manitfest
       detect_compile_constants doc_csproj # all platforms
       detect_android_package_format doc_csproj
+      detect_target_framework doc_csproj
 
       return config
     end
@@ -69,7 +70,7 @@ module Souyuz
       target_framework_node = doc_csproj.css('PropertyGroup > TargetFramework')
       target_framework = target_framework_node.text
 
-      output_path = File.join("bin", "#{configuration}", "#{target_framework}")
+      output_path = File.join("bin", "#{configuration}", "#{target_framework}", "#{Souyuz.config[:build_platform]}", "publish")
       Souyuz.config[:output_path] = abs_project_path output_path
     end
 
@@ -174,6 +175,12 @@ module Souyuz
       android_package_format_node = doc_csproj.xpath("/*[local-name()='Project']/*[local-name()='PropertyGroup'][translate(@*[local-name() = 'Condition'],'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = \" '$(configuration)|$(platform)' == '#{configuration.downcase}|#{platform.downcase}' \"]/*[local-name()='AndroidPackageFormat']/text()")
       Souyuz.cache[:android_package_format] = android_package_format_node.text
       android_package_format_node.text
+    end
+
+    def self.detect_target_framework(doc_csproj)
+      target_framework_node = doc_csproj.css('PropertyGroup > TargetFramework')
+      target_framework = target_framework_node.text
+      Souyuz.cache[:target_framework] = target_framework
     end
   end
 end

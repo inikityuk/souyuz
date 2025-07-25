@@ -8,6 +8,10 @@ module Souyuz
         android_package_filename_with_extension = "#{File.basename(android_package_path, ".*")}-signed#{File.extname(android_package_path)}"
         Souyuz.cache[:signed_android_package_path] = "#{File.join("#{android_package_dir}", "#{android_package_filename_with_extension}")}"
 
+        # android_package_aligned_filename_with_extension = "#{File.basename(android_package_path, ".*")}-aligned#{File.extname(android_package_path)}"
+        # Souyuz.cache[:aligned_apk_path] = "#{File.join("#{android_package_dir}", "#{android_package_aligned_filename_with_extension}")}"
+        Souyuz.cache[:aligned_apk_path] = android_package_path
+
         parts = prefix
         #parts << detect_java_executable
         parts << detect_apksigner_executable
