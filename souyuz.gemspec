@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'fastlane', '>= 2.182.0'
   s.add_dependency 'highline', '~> 2.0'
-  s.add_dependency 'nokogiri', '~> 1.16.5'
+  s.add_dependency 'nokogiri', '~> 1.18.8'
 
   # Development only
   s.add_development_dependency 'pry'
